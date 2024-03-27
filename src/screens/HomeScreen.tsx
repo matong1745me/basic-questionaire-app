@@ -1,19 +1,39 @@
-import * as React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import AppText from '@components/atoms/AppText';
+import React, {useState} from 'react';
+import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native';
 
-const HomeScreen = (): React.JSX.Element => {
+import AppText from '@components/atoms/AppText';
+import AppTextInput from '@components/atoms/AppTextInput';
+
+type Props = {
+  navigation: any;
+};
+
+const HomeScreen = ({navigation}: Props): React.JSX.Element => {
+  const [name, setName] = useState('');
+  const goToQuestionScreen = () => {
+    navigation.navigate('Question');
+  };
+
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.startButton}>
-        <AppText style={styles.startText}>Start !</AppText>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
+        <AppTextInput value={name} onChangeText={setName} gigs={() => {}} />
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={goToQuestionScreen}>
+          <AppText style={styles.startText}>Start !</AppText>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#FEFDED',
+  },
+  content: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

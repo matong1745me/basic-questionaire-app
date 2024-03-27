@@ -3,15 +3,14 @@ import {Text, StyleSheet} from 'react-native';
 import type {PropsWithChildren} from 'react';
 
 type AppTextProps = PropsWithChildren<{
-  title: string;
-  style: object;
+  style?: object;
 }>;
 const AppText = ({children, style}: AppTextProps): React.JSX.Element => {
-  return <Text style={{...styles.baseText, ...style}}>{children}</Text>;
+  return <Text style={{...styles.baseInputText, ...style}}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
-  baseText: {
+  baseInputText: {
     fontFamily: 'SukhumvitSet-Text',
     fontSize: 20,
   },
