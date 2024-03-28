@@ -4,20 +4,28 @@ import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native';
 import AppText from '@components/atoms/AppText';
 import AppTextInput from '@components/atoms/AppTextInput';
 
+import {useAppDispatch} from '@state/hooks';
+import {setPlayerName} from '@state/features/playerSlice';
 type Props = {
   navigation: any;
 };
 
 const HomeScreen = ({navigation}: Props): React.JSX.Element => {
-  const [name, setName] = useState('');
+  const [inputName, setInputName] = useState('');
+  const dispatch = useAppDispatch();
   const goToQuestionScreen = () => {
     navigation.navigate('Question');
+    dispatch(setPlayerName(inputName));
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <AppTextInput value={name} onChangeText={setName} gigs={() => {}} />
+        <AppTextInput
+          value={inputName}
+          onChangeText={setInputName}
+          placeholder="Input player name"
+        />
         <TouchableOpacity
           style={styles.startButton}
           onPress={goToQuestionScreen}>

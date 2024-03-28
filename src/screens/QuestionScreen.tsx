@@ -3,11 +3,20 @@ import {StyleSheet, SafeAreaView, View} from 'react-native';
 
 import AppText from '@components/atoms/AppText';
 
+import QuestionControl from '@components/cells/QuestionControl';
+
+import {useAppSelector} from '@state/hooks';
+
 const QuestionScreen = (): React.JSX.Element => {
+  const name = useAppSelector(state => state.player.name);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <AppText>TEST</AppText>
+        <View style={styles.helloBox}>
+          <AppText>Player Name: {name}</AppText>
+        </View>
+        <QuestionControl />
       </View>
     </SafeAreaView>
   );
@@ -16,7 +25,7 @@ const QuestionScreen = (): React.JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FEFDED',
+    backgroundColor: '#FFFFFF',
   },
   content: {
     flex: 1,
@@ -24,6 +33,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: '#FEFDED',
     padding: 20,
+  },
+  helloBox: {
+    marginBottom: 20,
   },
 });
 
