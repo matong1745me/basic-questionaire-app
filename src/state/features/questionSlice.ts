@@ -41,6 +41,7 @@ export const questionSlice = createSlice({
         };
       } else {
         state.answerIds = [...state.answerIds, body];
+        console.log(state.answerIds)
       }
     },
     nextQuestion: state => {

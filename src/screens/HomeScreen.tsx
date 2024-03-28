@@ -14,8 +14,13 @@ const HomeScreen = ({navigation}: Props): React.JSX.Element => {
   const [inputName, setInputName] = useState('');
   const dispatch = useAppDispatch();
   const goToQuestionScreen = () => {
-    navigation.navigate('Question');
     dispatch(setPlayerName(inputName));
+    navigation.navigate('Question');
+    setInputName('');
+  };
+
+  const goToLeaderboard = () => {
+    navigation.navigate('LeaderBoard');
   };
 
   return (
@@ -30,6 +35,11 @@ const HomeScreen = ({navigation}: Props): React.JSX.Element => {
           style={styles.startButton}
           onPress={goToQuestionScreen}>
           <AppText style={styles.startText}>Start !</AppText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.leaderboardButton}
+          onPress={goToLeaderboard}>
+          <AppText style={styles.leaderboardText}>LEADERBOARD</AppText>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -50,13 +60,25 @@ const styles = StyleSheet.create({
   },
   startButton: {
     width: '100%',
-    backgroundColor: '#A1C398',
+    backgroundColor: '#b0d0ff',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  startText: {
+    color: '#FFFFFF',
+  },
+  leaderboardButton: {
+    width: '100%',
+    borderColor: '#aa182c',
+    borderWidth: 2,
     padding: 10,
     borderRadius: 10,
     alignItems: 'center',
   },
-  startText: {
-    color: '#FFFFFF',
+  leaderboardText: {
+    color: '#aa182c',
   },
 });
 

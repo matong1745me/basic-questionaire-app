@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import type {PropsWithChildren} from 'react';
+import {useNavigation} from '@react-navigation/native';
+
 import type {Question} from '../../data/questions';
 import AppText from '@components/atoms/AppText';
 
@@ -11,12 +13,13 @@ import {
   saveAnswer,
   selectSelectedChoice,
 } from '@state/features/questionSlice';
-import { addScore } from '@state/features/playerSlice';
+import {addScore} from '@state/features/playerSlice';
 type QuestionCardProps = PropsWithChildren<{
   question: Question;
 }>;
 const QuestionCard = ({question}: QuestionCardProps): React.JSX.Element => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
   const choice = useAppSelector(selectSelectedChoice);
   const currentQuestionIndex = useAppSelector(
     state => state.question.currentIndex,
@@ -41,6 +44,7 @@ const QuestionCard = ({question}: QuestionCardProps): React.JSX.Element => {
       return sum;
     }, 0);
     dispatch(addScore(total));
+    navigation.navigate('LeaderBoard');
   };
 
   useEffect(() => {
@@ -81,15 +85,27 @@ const QuestionCard = ({question}: QuestionCardProps): React.JSX.Element => {
         );
       })}
       <View style={styles.stepButtonContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={onBackClick}>
-          <AppText style={styles.backText}>{'< Back'}</AppText>
-        </TouchableOpacity>
+        {currentQuestionIndex > 0 && (
+          <TouchableOpacity style={styles.backButton} onPress={onBackClick}>
+            <AppText style={styles.backText}>{'< Back'}</AppText>
+          </TouchableOpacity>
+        )}
         {currentQuestionIndex + 1 < allQuestions.length ? (
-          <TouchableOpacity style={styles.nextButton} onPress={onNextClick}>
-            <AppText style={styles.nextText}>{'Next >'}</AppText>
+          <TouchableOpacity
+            disabled={selectedChoice === null}
+            style={styles.nextButton}
+            onPress={onNextClick}>
+            <AppText
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                ...styles.nextText,
+                color: selectedChoice === null ? '#aaaaaa' : '#0d6efd',
+              }}>
+              {'Next >'}
+            </AppText>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.nextButton} onPress={onNextClick}>
+          <TouchableOpacity style={styles.nextButton} onPress={saveScore}>
             <AppText style={styles.nextText}>{'Finish'}</AppText>
           </TouchableOpacity>
         )}
@@ -114,7 +130,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     shadowOpacity: 1,
     shadowColor: '#b0d0ff',
-    width: '100%',
+    width: 'auto',
   },
   questionTitleText: {
     color: '#ffffff',
@@ -127,6 +143,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+    width: 'auto',
   },
   selectedChoiceBox: {
     backgroundColor: '#0d6efd',
@@ -137,7 +154,7 @@ const styles = StyleSheet.create({
   stepButtonContainer: {
     marginTop: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
   },
   backButton: {
     padding: 10,
@@ -147,9 +164,13 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     padding: 10,
+    marginLeft: 'auto',
   },
   nextText: {
     color: '#0d6efd',
+  },
+  disabled: {
+    color: '#ffffff',
   },
 });
 

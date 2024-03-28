@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: '#FEFDED',
     padding: 20,
   },
   helloBox: {
