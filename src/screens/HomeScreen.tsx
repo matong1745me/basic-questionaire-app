@@ -18,7 +18,6 @@ const HomeScreen = ({navigation}: Props): React.JSX.Element => {
     navigation.navigate('Question');
     setInputName('');
   };
-
   const goToLeaderboard = () => {
     navigation.navigate('LeaderBoard');
   };
